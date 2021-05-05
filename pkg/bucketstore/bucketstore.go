@@ -36,13 +36,11 @@ func (bs *BucketStore) CreateBucket(name string, limit int32, duration time.Dura
 		return bucket
 	}
 
-	bucket = limiter.NewDurationLimiter(name, limit, duration)
-
 	bs.BucketsMu.Lock()
-	bs.Buckets[name] = bucket
+	bs.Buckets[name] = limiter.NewDurationLimiter(name, limit, duration)
 	bs.BucketsMu.Unlock()
 
-	return bucket
+	return bs.Buckets[name]
 }
 
 // WaitForBucket will wait for a bucket to be ready.

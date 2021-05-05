@@ -8,7 +8,7 @@ import (
 	"golang.org/x/xerrors"
 )
 
-func init() {
+func init() { //nolint
 	MQClients = append(MQClients, "kafka")
 }
 
