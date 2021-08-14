@@ -11,7 +11,7 @@ RUN go mod download
 
 COPY . .
 
-RUN go build --trimpath -o ./out/sandwich ./cmd/main.go
+RUN go build -o ./out/sandwich ./cmd/main.go
 
 FROM alpine:3
 RUN apk add ca-certificates
@@ -19,4 +19,5 @@ RUN apk add ca-certificates
 COPY --from=build_base /tmp/sandwich-daemon/out/sandwich /app/sandwich
 COPY --from=build_base /tmp/sandwich-daemon/web/dist /web/dist
 
+EXPOSE 5469
 CMD ["/app/sandwich"]
